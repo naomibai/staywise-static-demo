@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff">
+  <title>Staywise · 发现附近的家</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" data-nav="explore"><span class="brand-icon">⌂</span><span>staywise</span></a>
+    <nav class="main-nav" aria-label="主导航">
+      <button class="nav-link active" data-nav="explore" type="button">发现住宿</button>
+      <button class="nav-link" data-nav="orders" type="button">订单管理</button>
+      <button class="nav-link" data-nav="analytics" type="button">业务数据</button>
+    </nav>
+    <div class="header-actions"><span class="connection-label"><i id="connectionDot"></i><span id="connectionText">静态演示数据</span></span><button class="profile-button" id="profileButton" type="button" title="关于演示数据"><span class="menu-glyph">☰</span><span class="profile-avatar">G</span></button></div>
+  </header>
+
+  <main>
+    <section class="page-view active" id="exploreView">
+      <section class="hero"><div class="hero-copy"><span class="eyebrow">A PLACE TO FEEL AT HOME</span><h1>下次旅行，住进<br><em>喜欢的地方。</em></h1><p>浏览根据 B 组种子数据整理的房源、评价和预订演示。</p></div><div class="hero-illustration" aria-hidden="true"><div class="hero-orb"></div><div class="hero-window"></div><div class="hero-building building-one"></div><div class="hero-building building-two"></div><div class="hero-roof">⌂</div><div class="hero-plant">✳</div></div></section>
+      <form class="search-bar" id="searchForm">
+        <label class="search-field destination-field"><span>目的地</span><input id="searchCity" maxlength="80" value="Hong Kong" placeholder="想去哪里？"></label>
+        <label class="search-field"><span>入住</span><input id="searchStart" type="date" required></label>
+        <label class="search-field"><span>退房</span><input id="searchEnd" type="date" required></label>
+        <label class="search-field guests-field"><span>旅客人数</span><select id="searchGuests"><option value="1">1 位旅客</option><option value="2" selected>2 位旅客</option><option value="3">3 位旅客</option><option value="4">4 位旅客</option><option value="5">5 位旅客</option><option value="6">6 位旅客</option></select></label>
+        <button class="search-button" type="submit"><span>⌕</span><b>搜索</b></button>
+      </form>
+      <section class="listing-section"><div class="section-heading"><div><span class="section-kicker">STAYS FOR YOUR NEXT TRIP</span><h2 id="listingHeading">发现你的下一处住处</h2><p id="listingSubheading">选择目的地和日期，点击“搜索”查看房源。</p></div><div class="result-count" id="stayCount">尚未搜索</div></div><div class="listing-grid" id="stayGrid"><div class="empty-listings">房源会在搜索后显示。</div></div></section>
+      <aside class="availability-note"><span>i</span><p>本网页是纯静态演示。预订操作只在浏览器中模拟，并保存到当前浏览器；不会连接或修改 SQL Server。房源图片使用插画占位，因为 B 组表结构没有图片字段。</p></aside>
+    </section>
+
+    <section class="page-view secondary-view" id="ordersView">
+      <div class="page-intro"><span class="section-kicker">YOUR STAY, IN ONE PLACE</span><h1>订单管理</h1><p>按住客或房东查看静态演示订单；网页中新增的预订只保存在本地浏览器。</p></div>
+      <div class="switcher-card"><div class="view-switch"><button class="small-tab active" data-order-mode="guest" type="button">住客订单</button><button class="small-tab" data-order-mode="host" type="button">房东订单</button></div><form id="orderForm" class="compact-form"><label id="orderIdLabel" for="orderId">住客编号</label><input id="orderId" type="number" min="1" value="4"><button class="primary-button" type="submit">查询订单</button></form></div>
+      <div class="data-result-card"><div class="data-result-head"><div><span class="section-kicker" id="orderQueryTag">QUERY 03</span><h2 id="orderResultTitle">住客预订和付款</h2></div><span class="row-pill" id="orderRowCount">尚未查询</span></div><div class="table-wrap" id="orderTableWrap"><div class="table-empty">输入编号并查询后，静态演示记录会显示在这里。</div></div></div>
+    </section>
+
+    <section class="page-view secondary-view" id="analyticsView">
+      <div class="page-intro"><span class="section-kicker">OPERATIONS & INSIGHTS</span><h1>业务数据</h1><p>使用 B 组表结构对应的静态演示数据计算其余业务查询。</p></div>
+      <div class="analytics-layout"><aside class="analytics-menu" id="analyticsMenu"></aside><section class="data-result-card analytics-result"><div class="data-result-head"><div><span class="section-kicker" id="analyticsQueryTag">QUERY 05</span><h2 id="analyticsTitle">待处理或失败付款</h2><p id="analyticsDescription"></p></div><button class="primary-button" id="runAnalytics" type="button">运行查询</button></div><span class="row-pill" id="analyticsRowCount">尚未查询</span><div class="table-wrap" id="analyticsTableWrap"><div class="table-empty">选择左侧查询后运行。</div></div></section></div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer"><a class="brand footer-brand" href="#" data-nav="explore"><span class="brand-icon">⌂</span><span>staywise</span></a><span>IS5413 Group Project · Static Preview</span><span>B 组表结构数据演示</span></footer>
+
+  <dialog class="detail-dialog" id="stayDialog">
+    <button class="dialog-close" id="closeDialog" type="button" aria-label="关闭">×</button>
+    <div class="detail-scroll"><div class="detail-art" id="detailArt"><span class="art-label">STAYWISE COLLECTION</span><div class="detail-illustration">⌂</div></div>
+      <div class="detail-content"><div class="detail-main"><div class="detail-topline"><span class="detail-type" id="detailType">整套房源</span><span class="rating-line" id="detailRating">☆ 暂无评价</span></div><h2 id="detailTitle">房源标题</h2><p class="detail-location" id="detailLocation"></p>
+        <div class="detail-divider"></div><h3>近期价格日历</h3><p class="muted-copy">未来 14 天 · Query 2 演示</p><div class="calendar-list" id="calendarList"><span class="muted-copy">正在整理日历…</span></div>
+        <div class="detail-divider"></div><h3>住客评价</h3><div class="review-list" id="reviewList"><span class="muted-copy">正在载入评价…</span></div></div>
+        <aside class="booking-card"><div class="booking-price"><strong id="bookingPrice">—</strong><span> / 晚</span></div><form id="bookingForm"><label>入住日期<input id="bookingStart" type="date" required></label><label>退房日期<input id="bookingEnd" type="date" required></label><label>旅客人数<select id="bookingGuests"><option value="1">1 位旅客</option><option value="2" selected>2 位旅客</option><option value="3">3 位旅客</option><option value="4">4 位旅客</option><option value="5">5 位旅客</option><option value="6">6 位旅客</option></select></label><button class="reserve-button" id="reserveButton" type="submit">模拟预订</button><p class="booking-help">静态演示：预订写入本地浏览器，不会写入数据库。</p></form><div class="booking-message hidden" id="bookingMessage"></div></aside>
+      </div>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status"></div>
+</body>
+</html>
